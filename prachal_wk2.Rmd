@@ -1,0 +1,57 @@
+---
+title: "Gapminder"
+author: "Heathcliff Neels"
+date: "11/03/2021"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
+
+
+library(tidyverse)
+
+```
+
+## Introduction
+In this document,we will be exploring the Gapminder dataset
+
+## observations from the Gapminder dataset
+### Countries with life expectancy less than 30
+```{r echo=FALSE}
+data("gapminder")
+gapminder %>% filter (lifeExp <30) %>% select(country)
+
+n <- nrow(gapminder %>% filter (lifeExp <30) %>% select(country))
+```
+
+Unfortunately there *have* been countries with low life expectancies. There were `r n` countries that had this situation
+
+### Countries with life expectancy over age 81
+```{r, echo=FALSE}
+
+gapminder %>% filter (lifeExp > 81) %>% select(country, year) 
+n <- nrow(gapminder %>% filter (lifeExp > 81) )
+
+```
+There are `r n` countries where life expectancy has exceeded 81 years
+
+### Life Expectancy by Continent in 2007
+```{r, echo=FALSE}
+smry1 <- data.frame(filter(gapminder,year == 2007))
+
+boxplot(lifeExp~continent, data=smry1)
+
+```
+```{r}
+bestcntry <- gapminder$country[which.max(gapminder$lifeExp)]
+```
+* The country with the higest life expectancy is `r bestcntry`.
+
+
+
+
